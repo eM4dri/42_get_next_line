@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/12 18:51:46 by emadriga          #+#    #+#             */
-/*   Updated: 2021/06/25 23:23:04 by emadriga         ###   ########.fr       */
+/*   Updated: 2021/06/19 15:57:40 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bonus.h"
+#include "get_next_line.h"
 
 size_t	ft_strlen(const char *s)
 {
@@ -24,12 +24,10 @@ size_t	ft_strlen(const char *s)
 
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
-	size_t	i;
-	size_t	dst_len;
-	size_t	src_len;
+	size_t			i;
+	const size_t	dst_len = ft_strlen(dst);
+	const size_t	src_len = ft_strlen(src);
 
-	dst_len = ft_strlen(dst);
-	src_len = ft_strlen(src);
 	if (dst_len < dstsize)
 	{
 		i = 0;
@@ -73,14 +71,13 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 char	*ft_strchr(const char *s, int c)
 {
 	char	*mem;
-	size_t	len;
 
 	mem = (char *)s;
-	len = ft_strlen(s) + 1;
-	while (len-- > 0)
+	while (*mem > 0)
 	{
-		if (*mem++ == (char)c)
-			return (--mem);
+		if (*mem == (char)c)
+			return (mem);
+		mem++;
 	}
 	return (NULL);
 }

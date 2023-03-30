@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/12 18:55:38 by emadriga          #+#    #+#             */
-/*   Updated: 2021/06/25 23:37:20 by emadriga         ###   ########.fr       */
+/*   Updated: 2021/06/25 23:35:42 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bonus.h"
+#include "get_next_line.h"
+#define LINE_FOUND 1
 
 static char	*ft_strjoin_free(char *s1, char const *s2)
 {
-	char	*join;
-	size_t	len;
+	const size_t	len = ft_strlen(s1) + ft_strlen(s2) + 1;
+	char			*join;
 
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
-	len = ft_strlen(s1) + ft_strlen(s2) + 1;
 	join = ft_calloc(sizeof(char), len);
 	if (!join)
 		return (0);
@@ -44,13 +44,12 @@ static char	*ft_strdup(const char *s1)
 
 static char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char	*out;
-	size_t	i;
-	size_t	len_s;
+	const size_t	len_s = ft_strlen(s);
+	char			*out;
+	size_t			i;
 
 	if (!s)
 		return (NULL);
-	len_s = ft_strlen(s);
 	if (len_s <= (size_t)start)
 		return (ft_strdup(""));
 	i = 0;
@@ -68,16 +67,15 @@ static char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (out);
 }
 
-static int	get_next_line2(int	readable, char **s, char **line)
+static int	get_next_line2(int readable, char **s, char **line)
 {
-	char	*str_aux;
-	char	*strchr_n;
+	const char	*strchr_n = ft_strchr(*s, '\n');
+	char		*str_aux;
 
 	if (readable < 0)
 		return (-1);
 	else if (readable == 0 && !*s)
 		return (0);
-	strchr_n = ft_strchr(*s, '\n');
 	if (strchr_n)
 	{
 		*line = ft_substr(*s, 0, strchr_n - *s);
@@ -100,11 +98,12 @@ int	get_next_line(int fd, char **line)
 
 	if (BUFFER_SIZE < 1 || !line || fd < 0 || fd > FD_SETSIZE)
 		return (-1);
-	buff = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (s[fd] != NULL && ft_strchr(s[fd], '\n'))
+		return (get_next_line2(LINE_FOUND, &s[fd], line));
+	buff = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 	readable = read(fd, buff, BUFFER_SIZE);
 	while (readable >= 0)
 	{
-		buff[readable] = '\0';
 		if (!s[fd])
 			s[fd] = ft_strdup(buff);
 		else
