@@ -6,7 +6,7 @@
 /*   By: emadriga <emadriga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 18:41:14 by emadriga          #+#    #+#             */
-/*   Updated: 2021/06/20 11:00:20 by emadriga         ###   ########.fr       */
+/*   Updated: 2023/03/31 00:19:42 by emadriga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@
 # include <stdlib.h>
 
 size_t	ft_strlen(const char *s);
-size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
-void	*ft_memmove(void *dst, const void *src, size_t len);
 char	*ft_strchr(const char *s, int c);
 void	*ft_calloc(size_t count, size_t size);
 int		get_next_line(int fd, char **line);
